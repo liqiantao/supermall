@@ -1,3 +1,5 @@
+## 项目只完成了3分之2，待完成中......
+
 # supermall
 
 ## Project setup
