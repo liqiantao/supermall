@@ -1,13 +1,9 @@
 <template>
 <!-- 使用插槽 -->
-  <div class="tab-bar-item" @click="ItemClick">
-    <div>
-      <slot v-if="!active" name='item-icon'></slot>
-      <slot v-else name='item-icon-active'></slot>
-    </div>
-    <div :style="TabBarActive">
-      <slot name='item-text'></slot>
-    </div>
+  <div class="tab-bar-item" @click="itemClick">
+    <div v-if="!isActive" ><slot name='item-icon'></slot></div>
+    <div v-else><slot name='item-icon-active'></slot></div>
+    <div :style="activeStyle"><slot name='item-text'></slot></div>
   </div>
 </template>
 
@@ -15,7 +11,9 @@
 export default {
   name:'TabBarItem',
   props:{
+    //传入当前点击组件的路径
     path:String,
+    // 让用户传入颜色，默认为red
     activeColor:{
       type:String,
       default:'red'
@@ -23,21 +21,20 @@ export default {
   },
   data(){
     return {
-      flag:false
     }
   },
   methods:{
     // 当用户点击后切换页面
-    ItemClick(){
+    itemClick(){
       this.$router.replace(this.path).catch(err=>{});
     },
   },
   computed:{
-    active(){
+    isActive(){
       return this.$route.path.indexOf(this.path) !== -1
     },
-    TabBarActive(){
-      return this.active?"color:"+this.activeColor:'';
+    activeStyle(){
+      return this.isActive ? {color: this.activeColor} : {};
     }
   }
 }

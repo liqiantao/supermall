@@ -1,32 +1,35 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const TabBarHome = () =>
-    import ('../views/home/Home');
-const TabBarCategory = () =>
-    import ('../views/category/Category');
-const TabBarProfile = () =>
-    import ('../views/profile/Profile');
-const TabBarCart = () =>
-    import ('../views/cart/Cart');
 // 注入插件
 Vue.use(VueRouter);
+
+
+const Home = () =>
+    import ('../views/home/Home');
+const Category = () =>
+    import ('../views/category/Category');
+const Profile = () =>
+    import ('../views/profile/Profile');
+const Cart = () =>
+    import ('../views/cart/Cart');
+
 // 定义路由
 const routes = [{
     path: '',
-    component: TabBarHome
+    redirect: '/home'
 }, {
     path: '/home',
-    component: TabBarHome
+    component: Home
 }, {
     path: '/category',
-    component: TabBarCategory
+    component: Category
 }, {
     path: '/profile',
-    component: TabBarProfile
+    component: Profile
 }, {
     path: '/cart',
-    component: TabBarCart
+    component: Cart
 }];
 
 const router = new VueRouter({

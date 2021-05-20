@@ -1,14 +1,13 @@
 <template>
   <div id="home" class="wrapper">
     <nav-bar class="home-navbar"><p slot="center">购物街</p></nav-bar>
-<!-- 插槽引用时，给予content，css样式不叠加， 插槽里的自适应-->
+    <!-- 插槽引用时，给予content，css样式不叠加， 插槽里的自适应-->
     <scroll class="content" ref="scroll" @ReachBottom="ReachBottom">
       <home-swiper :banners="banners"></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view/>
       <tab-control :titles="['流行','新款','精选']" @childClick="childClick"></tab-control>
       <goods-list :goods="showgoods"></goods-list>
-
     </scroll>
     <reach-top @click.native="TopClick"></reach-top>
   </div>
@@ -54,6 +53,7 @@ export default {
     }
   },
   created(){
+    //请求多个数据
     this.getHomeMultidata();
     // 请求商品数据
     this.getHomeGoods('pop');
@@ -93,12 +93,11 @@ export default {
     getHomeMultidata(){
         getHomeMultidata().then(res =>{
           // 存入轮播图数据
-          this.banners = res.data.data.banner.list;
+          this.banners = res.data.banner.list;
           // 存入推荐位数据
-          this.recommends = res.data.data.recommend.list;
+          this.recommends = res.data.recommend.list;
           return res;
         },err =>{
-          console.log(err);
           return err;
         }
       )
@@ -109,11 +108,13 @@ export default {
         // console.log(page);
       getHomeGoods(type,page).then(res=>{
         //把每次获得数据压入数组中
-        this.goods[type].list.push(...res.data.data.list);
+        console.log(this.goods[type]);
+        this.goods[type].list.push(...res.data.list);
       },error=>{
         console.log(error);
       })
     },
+    //划动到底部后触发
     ReachBottom(){
       this.getHomeGoods(this.currentgoods);
     },

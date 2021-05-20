@@ -8,12 +8,15 @@ export function request(config) {
         })
         //拦截器
     instance.interceptors.request.use(config => {
-        // console.log(config.data);
-        return config
+            return config
+        }, err => {
+            return err
+        })
+        // 2.2.响应拦截
+    instance.interceptors.response.use(res => {
+        return res.data
     }, err => {
-        // console.log(err.data);
-        return err
+        console.log(err);
     })
-
     return instance(config);
 }
